@@ -1,3 +1,10 @@
 # GitHub User Search Application
-This project is a React app for searching GitHub users via API.
-Task 0: Initial React setup with Vite and Axios.
+
+This is a React application that allows users to search for GitHub users using the GitHub API.  
+
+## Task 0: Initial Setup
+
+- Created React project using Vite.
+- Installed Axios for API requests.
+- Configured basic folder structure (`src/`, `components/`, `services/`).
+- Created initial `App.jsx` file.
