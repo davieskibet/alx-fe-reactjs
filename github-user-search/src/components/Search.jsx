@@ -19,12 +19,12 @@ export default function Search() {
       const results = await advancedUserSearch(username, location, minRepos);
 
       if (!results || results.length === 0) {
-        setError("Looks like we can’t find the user");
+        setError("Looks like we cant find the user"); // straight apostrophe
       } else {
         setUsers(results);
       }
     } catch {
-      setError("Looks like we can’t find the user");
+      setError("Looks like we cant find the user"); // straight apostrophe
     } finally {
       setLoading(false);
     }
