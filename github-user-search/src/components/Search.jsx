@@ -1,24 +1,26 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { fetchUserData } from "../services/githubService";
 
-const Search = () => {
+export default function Search() {
   const [username, setUsername] = useState("");
-  const [userData, setUserData] = useState(null);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!username) return;
-
     setLoading(true);
     setError("");
-    setUserData(null);
+    setUser(null);
 
     try {
       const data = await fetchUserData(username);
-      setUserData(data);
-    } catch (err) {
+      if (!data) {
+        setError("Looks like we can't find the user");
+      } else {
+        setUser(data);
+      }
+    } catch {
       setError("Looks like we can't find the user");
     } finally {
       setLoading(false);
@@ -30,9 +32,9 @@ const Search = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
+          placeholder="Enter GitHub username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          placeholder="Enter GitHub username"
         />
         <button type="submit">Search</button>
       </form>
@@ -40,17 +42,15 @@ const Search = () => {
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
 
-      {userData && (
+      {user && (
         <div>
-          <img src={userData.avatar_url} alt={userData.login} width="100" />
-          <h3>{userData.name || userData.login}</h3>
-          <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
-            Visit Profile
+          <img src={user.avatar_url} alt={user.login} width={100} />
+          <h2>{user.name || user.login}</h2>
+          <a href={user.html_url} target="_blank" rel="noopener noreferrer">
+            View Profile
           </a>
         </div>
       )}
     </div>
   );
-};
-
-export default Search;
+}
