@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fetchUserData } from "../services/githubService";
+import { fetchUserData, advancedUserSearch } from "../services/githubService";
 
 export default function Search() {
   const [username, setUsername] = useState("");
@@ -16,61 +16,95 @@ export default function Search() {
     setUsers([]);
 
     try {
-      const data = await fetchUserData({ username, location, minRepos });
-      if (data.length === 0) {
-        setError("Looks like we can't find the user");
+      const results = await advancedUserSearch(username, location, minRepos);
+
+      if (!results || results.length === 0) {
+        setError("Looks like we can’t find the user");
       } else {
-        setUsers(data);
+        setUsers(results);
       }
     } catch {
-      setError("Looks like we can't find the user");
+      setError("Looks like we can’t find the user");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="p-4">
-      <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-2 mb-4">
+    <div className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+      <h1 className="text-2xl font-bold text-center mb-6">GitHub User Search</h1>
+
+      {/* Form */}
+      <form onSubmit={handleSearch} className="space-y-4">
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
-          className="border p-2 rounded"
+          placeholder="Search by username"
+          className="w-full p-3 border rounded-lg"
         />
+
         <input
           type="text"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
-          placeholder="Location"
-          className="border p-2 rounded"
+          placeholder="Filter by location (optional)"
+          className="w-full p-3 border rounded-lg"
         />
+
         <input
           type="number"
           value={minRepos}
           onChange={(e) => setMinRepos(e.target.value)}
-          placeholder="Min Repos"
-          className="border p-2 rounded"
+          placeholder="Minimum repositories (optional)"
+          className="w-full p-3 border rounded-lg"
         />
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
+        >
           Search
         </button>
       </form>
 
-      {loading && <p>Loading...</p>}
-      {error && <p className="text-red-500">{error}</p>}
+      {/* Loading */}
+      {loading && <p className="text-center mt-4">Loading...</p>}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Error */}
+      {error && <p className="text-center text-red-500 mt-4">{error}</p>}
+
+      {/* Results */}
+      <div className="mt-6 space-y-4">
         {users.map((user) => (
-          <div key={user.id} className="border p-4 rounded shadow">
-            <img src={user.avatar_url} alt={user.login} width={100} className="rounded-full mb-2"/>
-            <p className="font-bold">{user.name || user.login}</p>
-            {user.location && <p>Location: {user.location}</p>}
-            <p>Public Repos: {user.public_repos}</p>
-            <a href={user.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-600">
-              GitHub Profile
-            </a>
+          <div
+            key={user.id}
+            className="flex items-center p-4 border rounded-lg shadow-sm"
+          >
+            <img
+              src={user.avatar_url}
+              alt={user.login}
+              className="w-16 h-16 rounded-full mr-4"
+            />
+
+            <div className="flex-1">
+              <p className="text-lg font-semibold">{user.login}</p>
+              <p className="text-gray-600">
+                ⭐ Repos: {user.public_repos ?? "N/A"}
+              </p>
+              <p className="text-gray-600">
+                📍 {user.location ?? "Unknown"}
+              </p>
+
+              <a
+                href={user.html_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                View Profile →
+              </a>
+            </div>
           </div>
         ))}
       </div>
