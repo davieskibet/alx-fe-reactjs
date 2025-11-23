@@ -1,16 +1,14 @@
-import Header from './components/Header';
-import UserProfile from './components/UserProfile';
-import MainContent from './components/MainContent';
-import Footer from './components/Footer';
+import React from "react";
+import Search from "./components/Search";
+import "./index.css";
+
 
 function App() {
   return (
-    <>
-      <Header />
-      <UserProfile name="Davies" age={27} bio="Front-end Developer" />
-      <MainContent />
-      <Footer />
-    </>
+    <div>
+      <h1>GitHub User Search</h1>
+      <Search />
+    </div>
   );
 }
 
