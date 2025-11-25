@@ -1,6 +1,7 @@
 function UserProfile() {
   return (
-    <div className="user-profile bg-gray-100 p-4 sm:p-6 md:p-8 max-w-xs sm:max-w-sm md:max-w-md mx-auto my-10 rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 transform transition duration-300">
+   <div className="user-profile bg-gray-100 sm:p-4 md:p-8 max-w-xs sm:max-w-sm md:max-w-md mx-auto my-10 rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 transform transition duration-300">
+
       <img
         src="https://randomuser.me/api/portraits/men/32.jpg"
         alt="John Doe"
