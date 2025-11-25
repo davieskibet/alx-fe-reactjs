@@ -1,23 +1,28 @@
+// src/App.jsx
 import { useState } from "react";
 import Search from "./components/Search";
 import UserCard from "./components/UserCard";
-import { getUser } from "./services/githubService";
+import { searchUsers } from "./services/githubService";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [users, setUsers] = useState([]);       // multiple users
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSearch = async (username) => {
+  const handleSearch = async ({ username, location, minRepos }) => {
     setLoading(true);
     setError("");
-    setUser(null);
+    setUsers([]);
 
     try {
-      const data = await getUser(username);
-      setUser(data);
+      const data = await searchUsers({ username, location, minRepos });
+      if (data.length === 0) {
+        setError("Looks like we can't find any users");
+      } else {
+        setUsers(data);
+      }
     } catch (err) {
-      setError("Looks like we cant find the user"); // <-- error message
+      setError("Error fetching users");
     } finally {
       setLoading(false);
     }
@@ -28,9 +33,14 @@ function App() {
       <h1>GitHub User Search</h1>
       <Search onSearch={handleSearch} />
 
-      {loading && <p>Loading...</p>}              {/* Loading state */}
-      {error && <p style={{ color: "red" }}>{error}</p>} {/* Error state */}
-      {user && <UserCard user={user} />}          {/* Display user info */}
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", marginTop: "20px" }}>
+        {users.map((user) => (
+          <UserCard key={user.id} user={user} />
+        ))}
+      </div>
     </div>
   );
 }
