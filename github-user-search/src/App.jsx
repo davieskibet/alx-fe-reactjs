@@ -1,4 +1,3 @@
-// src/App.jsx
 import { useState } from "react";
 import Search from "./components/Search";
 import UserCard from "./components/UserCard";
@@ -18,7 +17,7 @@ function App() {
       const data = await getUser(username);
       setUser(data);
     } catch (err) {
-      setError("Looks like we can't find the user.");
+      setError("Looks like we cant find the user"); // <-- error message
     } finally {
       setLoading(false);
     }
@@ -27,13 +26,11 @@ function App() {
   return (
     <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
       <h1>GitHub User Search</h1>
-
-      {/* Corrected component usage */}
       <Search onSearch={handleSearch} />
 
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {user && <UserCard user={user} />}
+      {loading && <p>Loading...</p>}              {/* Loading state */}
+      {error && <p style={{ color: "red" }}>{error}</p>} {/* Error state */}
+      {user && <UserCard user={user} />}          {/* Display user info */}
     </div>
   );
 }
