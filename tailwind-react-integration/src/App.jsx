@@ -1,9 +1,11 @@
+import UserProfile from "./components/UserProfile";
+
 function App() {
   return (
-    <h1 className="text-4xl font-bold text-blue-600">
-      Tailwind is working!
-    </h1>
-  )
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <UserProfile />
+    </div>
+  );
 }
 
-export default App
+export default App;
