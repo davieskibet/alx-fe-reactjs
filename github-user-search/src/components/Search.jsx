@@ -1,5 +1,6 @@
 // src/components/Search.jsx
 import React, { useState } from "react";
+import UserCard from "./UserCard";
 import { fetchUserData } from "../services/githubService";
 
 const Search = () => {
@@ -20,7 +21,7 @@ const Search = () => {
       const data = await fetchUserData(username);
       setUser(data);
     } catch (err) {
-      setError("Looks like we can't find the user");
+      setError("Looks like we cant find the user");
     } finally {
       setLoading(false);
     }
@@ -40,12 +41,7 @@ const Search = () => {
 
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      {user && (
-        <div>
-          <img src={user.avatar_url} alt={user.login} width={100} />
-          <p>{user.login}</p>
-        </div>
-      )}
+      {user && <UserCard user={user} />}
     </div>
   );
 };
