@@ -1,5 +1,6 @@
+// src/App.jsx
 import { useState } from "react";
-import SearchBar from "./components/SearchBar";
+import Search from "./components/Search";
 import UserCard from "./components/UserCard";
 import { getUser } from "./services/githubService";
 
@@ -26,7 +27,9 @@ function App() {
   return (
     <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
       <h1>GitHub User Search</h1>
-      <SearchBar onSearch={handleSearch} />
+
+      {/* Corrected component usage */}
+      <Search onSearch={handleSearch} />
 
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
