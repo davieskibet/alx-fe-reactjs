@@ -31,6 +31,10 @@ function App() {
   return (
     <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
       <h1>GitHub User Search</h1>
+      <h1 className="text-3xl font-bold text-blue-600">
+  Tailwind v4 is working!
+</h1>
+
       <Search onSearch={handleSearch} />
 
       {loading && <p>Loading...</p>}
