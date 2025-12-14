@@ -1,31 +1,24 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-const FormikForm = () => {
-  const initialValues = {
-    username: "",
-    email: "",
-    password: "",
-  };
-
+function FormikForm() {
   const validationSchema = Yup.object({
     username: Yup.string().required("Username is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string().required("Password is required"),
   });
 
-  const onSubmit = (values) => {
-    console.log(values);
-  };
-
   return (
     <div>
       <h2>Formik Registration Form</h2>
 
       <Formik
-        initialValues={initialValues}
+        initialValues={{ username: "", email: "", password: "" }}
         validationSchema={validationSchema}
-        onSubmit={onSubmit}
+        onSubmit={(values) => {
+          console.log(values);
+          alert("Formik registration successful!");
+        }}
       >
         <Form>
           <Field name="username" placeholder="Username" />
@@ -42,6 +35,6 @@ const FormikForm = () => {
       </Formik>
     </div>
   );
-};
+}
 
 export default FormikForm;
