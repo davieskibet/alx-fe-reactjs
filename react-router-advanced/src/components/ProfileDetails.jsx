@@ -1,5 +1,7 @@
 import React from "react";
 
-export default function ProfileDetails() {
-  return <p>This is the profile details section.</p>;
+function ProfileDetails() {
+  return <div>This is the Profile Details section.</div>;
 }
+
+export default ProfileDetails;

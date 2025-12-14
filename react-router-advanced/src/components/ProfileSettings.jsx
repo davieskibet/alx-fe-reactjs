@@ -1,5 +1,8 @@
 import React from "react";
 
-export default function ProfileSettings() {
-  return <p>This is the profile settings section.</p>;
+function ProfileSettings() {
+  return <div>This is the Profile Settings section.</div>;
 }
+
+export default ProfileSettings;
+
