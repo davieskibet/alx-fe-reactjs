@@ -28,10 +28,8 @@ test("toggles a todo completed state", () => {
 
 test("deletes a todo", () => {
   render(<TodoList />);
-  
   const todoLi = screen.getByText(/Learn React/i).closest("li");
   const deleteButton = within(todoLi).getByText("Delete");
-  
   fireEvent.click(deleteButton);
   expect(screen.queryByText(/Learn React/i)).not.toBeInTheDocument();
 });
