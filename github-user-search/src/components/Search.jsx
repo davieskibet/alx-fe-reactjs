@@ -4,7 +4,7 @@ import { fetchUsersWithFilters } from "../services/githubService";
 function Search() {
   const [username, setUsername] = useState("");
   const [location, setLocation] = useState("");
-  const [repos, setRepos] = useState("");
+  const [minRepos, setMinRepos] = useState(""); // updated name
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -16,10 +16,10 @@ function Search() {
     setUsers([]);
 
     try {
-      const results = await fetchUsersWithFilters({ username, location, repos });
+      const results = await fetchUsersWithFilters({ username, location, minRepos });
       setUsers(results);
     } catch {
-      setError("Looks like we cant find the user");
+      setError("Looks like we cant find the user"); // exact string
     } finally {
       setLoading(false);
     }
@@ -45,8 +45,8 @@ function Search() {
         <input
           type="number"
           placeholder="Minimum Repos"
-          value={repos}
-          onChange={(e) => setRepos(e.target.value)}
+          value={minRepos}
+          onChange={(e) => setMinRepos(e.target.value)} // updated
           className="border p-2 rounded"
         />
         <button type="submit" className="bg-blue-500 text-white p-2 rounded">
